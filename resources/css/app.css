@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; }
+}
+
+@layer components {
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+        @apply inline-flex items-center gap-2 bg-gradient-to-r from-green-700 to-green-500 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:from-green-800 hover:to-green-600 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl;
+    }
+    .btn-outline {
+        @apply inline-flex items-center gap-2 border-2 border-green-600 text-green-700 font-semibold px-6 py-3 rounded-xl hover:bg-green-700 hover:text-white transition-all duration-300;
+    }
+    .btn-white {
+        @apply inline-flex items-center gap-2 bg-white text-green-700 font-semibold px-6 py-3 rounded-xl shadow hover:bg-green-50 transition-all duration-300;
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+        @apply bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden;
+    }
+    .card-islamic {
+        @apply bg-white rounded-2xl shadow-md border border-green-100 hover:border-green-300 transition-all duration-300;
+    }
+
+    /* ===== SECTION ===== */
+    .section-title {
+        @apply text-3xl md:text-4xl font-bold text-green-800 mb-3;
+    }
+    .section-subtitle {
+        @apply text-gray-500 text-lg mb-10 max-w-2xl mx-auto;
+    }
+    .section-badge {
+        @apply inline-block bg-green-100 text-green-700 text-sm font-semibold px-4 py-1.5 rounded-full mb-4;
+    }
+
+    /* ===== ISLAMIC ORNAMENT ===== */
+    .ornament-divider {
+        @apply flex items-center justify-center gap-4 mb-10;
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+        content: '';
+        @apply flex-1 h-px bg-gradient-to-r from-transparent via-green-300 to-transparent;
+    }
+
+    /* ===== FORM ===== */
+    .form-input {
+        @apply w-full border border-gray-300 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition;
+    }
+    .form-label {
+        @apply block text-sm font-semibold text-gray-700 mb-1.5;
+    }
+    .form-error {
+        @apply text-red-500 text-sm mt-1;
+    }
+
+    /* ===== HERO GRADIENT ===== */
+    /* Combined: gradient + subtle pattern in one declaration to avoid CSS override conflicts */
+    .hero-gradient {
+        background:
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+            linear-gradient(135deg, #052e16 0%, #14532d 30%, #166534 60%, #15803d 80%, #16a34a 100%);
+    }
+    /* Keep hero-pattern as alias for backward compat */
+    .hero-pattern { /* no-op — pattern already in hero-gradient */ }
+
+    /* Page header hero — used on inner pages (profil, akademik, etc.) */
+    .page-hero {
+        background:
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+            linear-gradient(135deg, #052e16 0%, #14532d 35%, #166534 65%, #16a34a 100%);
+        padding-top: 7rem;
+        padding-bottom: 4rem;
+        color: #ffffff;
+    }
+
+    /* ===== NAVBAR ===== */
+    .nav-link {
+        @apply text-white/90 hover:text-white font-medium transition-colors duration-200 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-yellow-300 after:transition-all hover:after:w-full;
+    }
+    .nav-link-active {
+        @apply text-yellow-300 font-semibold;
+    }
+
+    /* ===== BADGE STATUS ===== */
+    .badge-pending  { @apply bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold; }
+    .badge-proses   { @apply bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold; }
+    .badge-diterima { @apply bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold; }
+    .badge-ditolak  { @apply bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold; }
+
+    /* ===== ADMIN SIDEBAR ===== */
+    .sidebar-link {
+        @apply flex items-center gap-3 px-4 py-3 text-green-100 hover:bg-white/10 hover:text-white rounded-xl transition-all duration-200;
+    }
+    .sidebar-link-active {
+        @apply flex items-center gap-3 px-4 py-3 bg-white/20 text-white font-semibold rounded-xl;
+    }
+    .admin-card {
+        @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6;
+    }
+}
+
+@layer utilities {
+    .text-shadow { text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+    .text-shadow-sm { text-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+    .animate-delay-100 { animation-delay: 100ms; }
+    .animate-delay-200 { animation-delay: 200ms; }
+    .animate-delay-300 { animation-delay: 300ms; }
+}
