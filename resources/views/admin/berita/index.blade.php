@@ -44,8 +44,8 @@
                 <td class="px-4 py-3 text-right">
                     <div class="flex items-center justify-end gap-2">
                         <a href="{{ route('berita.show', $berita->slug) }}" target="_blank" class="text-blue-600 hover:text-blue-800 text-xs font-medium">👁️</a>
-                        <a href="{{ route('admin.berita.edit', $berita) }}" class="text-green-600 hover:text-green-800 text-xs font-medium">✏️ Edit</a>
-                        <form action="{{ route('admin.berita.destroy', $berita) }}" method="POST" onsubmit="return confirm('Hapus berita ini?')">
+                        <a href="{{ route('admin.berita.edit', ['berita' => $berita]) }}" class="text-green-600 hover:text-green-800 text-xs font-medium">✏️ Edit</a>
+                        <form action="{{ route('admin.berita.destroy', ['berita' => $berita]) }}" method="POST" onsubmit="return confirm('Hapus berita ini?')">
                             @csrf @method('DELETE')
                             <button type="submit" class="text-red-500 hover:text-red-700 text-xs font-medium">🗑️ Hapus</button>
                         </form>

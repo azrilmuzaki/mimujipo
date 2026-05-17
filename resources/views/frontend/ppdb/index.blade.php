@@ -1,4 +1,4 @@
-?@extends('frontend.layouts.app')
+@extends('frontend.layouts.app')
 @section('title', 'PPDB 2025/2026')
 @section('content')
 

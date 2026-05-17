@@ -34,6 +34,35 @@ use App\Http\Controllers\Admin\UserController;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/favicon.ico', function () {
+    $faviconSetting = \App\Models\Pengaturan::where('key', 'favicon')->first();
+    $storedFaviconPath = $faviconSetting?->value;
+    $storedFaviconFile = $storedFaviconPath ? public_path('storage/' . $storedFaviconPath) : null;
+    $fallbackFaviconFile = public_path('images/favicon2.png');
+
+    $faviconFile = ($storedFaviconFile && file_exists($storedFaviconFile))
+        ? $storedFaviconFile
+        : $fallbackFaviconFile;
+
+    abort_unless(file_exists($faviconFile), 404);
+
+    $extension = strtolower(pathinfo($faviconFile, PATHINFO_EXTENSION));
+    $contentType = match ($extension) {
+        'svg' => 'image/svg+xml',
+        'ico' => 'image/x-icon',
+        'jpg', 'jpeg' => 'image/jpeg',
+        'webp' => 'image/webp',
+        default => 'image/png',
+    };
+
+    return response()->file($faviconFile, [
+        'Content-Type' => $contentType,
+        'Cache-Control' => 'no-cache, no-store, must-revalidate',
+        'Pragma' => 'no-cache',
+        'Expires' => '0',
+    ]);
+});
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/profil', [ProfilController::class, 'index'])->name('profil');
 Route::get('/akademik', [AkademikController::class, 'index'])->name('akademik');
@@ -86,7 +115,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Berita
-        Route::resource('berita', AdminBeritaController::class)->except(['show']);
+        Route::resource('berita', AdminBeritaController::class)
+            ->parameters(['berita' => 'berita'])
+            ->except(['show']);
         Route::resource('kategori-berita', KategoriBeritaController::class)->except(['show']);
 
         // Pengumuman

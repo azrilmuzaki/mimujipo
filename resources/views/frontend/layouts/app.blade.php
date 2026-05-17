@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 
 <head>
@@ -7,7 +7,7 @@
     <meta name="description"
         content="@yield('meta_description', 'Website resmi Madrasah Ibtidaiyah Miftahul Ulum Jipo, Kepohbaru, Bojonegoro - Madrasah Ibtidaiyah berkualitas berbasis nilai-nilai Islam')">
     <title>@yield('title', 'MI Miftahul Ulum') | Madrasah Ibtidaiyah Miftahul Ulum</title>
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    @include('partials.favicon')
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,6 +37,13 @@
 
     {{-- ===== NAVBAR ===== --}}
     <nav id="navbar" class="fixed top-0 w-full z-50 hero-gradient transition-all duration-300">
+        @php
+            $isProfilMenuActive = request()->routeIs('profil') || request()->routeIs('guru');
+            $isInformasiMenuActive = request()->routeIs('akademik')
+                || request()->routeIs('berita*')
+                || request()->routeIs('galeri*')
+                || request()->routeIs('prestasi*');
+        @endphp
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <!-- Logo -->
@@ -52,30 +59,93 @@
                 </a>
 
                 <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center gap-6 xl:gap-8">
-                    <a href="{{ route('home') }}"
-                        class="nav-link {{ request()->routeIs('home') ? 'nav-link-active' : '' }}">Beranda</a>
-                    <a href="{{ route('profil') }}"
-                        class="nav-link {{ request()->routeIs('profil') ? 'nav-link-active' : '' }}">Profil</a>
-                    <a href="{{ route('akademik') }}"
-                        class="nav-link {{ request()->routeIs('akademik') ? 'nav-link-active' : '' }}">Akademik</a>
-                    <a href="{{ route('guru') }}"
-                        class="nav-link {{ request()->routeIs('guru') ? 'nav-link-active' : '' }}">Guru & Staff</a>
-                    <a href="{{ route('berita.index') }}"
-                        class="nav-link {{ request()->routeIs('berita*') ? 'nav-link-active' : '' }}">Berita</a>
-                    <a href="{{ route('galeri.index') }}"
-                        class="nav-link {{ request()->routeIs('galeri*') ? 'nav-link-active' : '' }}">Galeri</a>
-                    <a href="{{ route('prestasi.index') }}"
-                        class="nav-link {{ request()->routeIs('prestasi*') ? 'nav-link-active' : '' }}">Prestasi</a>
-                    <a href="{{ route('kontak.index') }}"
-                        class="nav-link {{ request()->routeIs('kontak*') ? 'nav-link-active' : '' }}">Kontak</a>
-                    <a href="{{ route('ppdb.index') }}" class="btn-white !py-2 !px-5 text-sm">
-                        📝 Daftar PPDB
-                    </a>
+                <div class="hidden lg:flex items-center gap-3 xl:gap-4">
+                    <div class="flex items-center gap-1 xl:gap-2">
+                        <a href="{{ route('home') }}"
+                            class="rounded-xl px-3 py-2 text-sm xl:text-[15px] transition-all duration-300 {{ request()->routeIs('home') ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                            Beranda
+                        </a>
+
+                        <div class="relative group">
+                            <button type="button"
+                                class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm xl:text-[15px] transition-all duration-300 focus:outline-none {{ $isProfilMenuActive ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                                <span>Profil</span>
+                                <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div
+                                class="pointer-events-none invisible absolute left-0 top-full z-20 pt-3 opacity-0 -translate-y-2 transition-all duration-300 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                                <div class="w-56 rounded-2xl border border-green-100/90 bg-white/95 p-2 shadow-2xl backdrop-blur-xl">
+                                    <a href="{{ route('profil') }}"
+                                        class="flex rounded-xl px-4 py-3 text-sm transition {{ request()->routeIs('profil') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-700' }}">
+                                        Profil Madrasah
+                                    </a>
+                                    <a href="{{ route('guru') }}"
+                                        class="mt-1 flex rounded-xl px-4 py-3 text-sm transition {{ request()->routeIs('guru') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-700' }}">
+                                        Guru &amp; Staff
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <button type="button"
+                                class="inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm xl:text-[15px] transition-all duration-300 focus:outline-none {{ $isInformasiMenuActive ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                                <span>Informasi</span>
+                                <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+                            <div
+                                class="pointer-events-none invisible absolute left-0 top-full z-20 pt-3 opacity-0 -translate-y-2 transition-all duration-300 group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+                                <div class="w-56 rounded-2xl border border-green-100/90 bg-white/95 p-2 shadow-2xl backdrop-blur-xl">
+                                    <a href="{{ route('akademik') }}"
+                                        class="flex rounded-xl px-4 py-3 text-sm transition {{ request()->routeIs('akademik') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-700' }}">
+                                        Akademik
+                                    </a>
+                                    <a href="{{ route('berita.index') }}"
+                                        class="mt-1 flex rounded-xl px-4 py-3 text-sm transition {{ request()->routeIs('berita*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-700' }}">
+                                        Berita
+                                    </a>
+                                    <a href="{{ route('galeri.index') }}"
+                                        class="mt-1 flex rounded-xl px-4 py-3 text-sm transition {{ request()->routeIs('galeri*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-700' }}">
+                                        Galeri
+                                    </a>
+                                    <a href="{{ route('prestasi.index') }}"
+                                        class="mt-1 flex rounded-xl px-4 py-3 text-sm transition {{ request()->routeIs('prestasi*') ? 'bg-green-50 text-green-700 font-semibold' : 'text-gray-700 hover:bg-green-50 hover:text-green-700' }}">
+                                        Prestasi
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="{{ route('kontak.index') }}"
+                            class="rounded-xl px-3 py-2 text-sm xl:text-[15px] transition-all duration-300 {{ request()->routeIs('kontak*') ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                            Kontak
+                        </a>
+                    </div>
+
+                    <div class="ml-2 flex items-center gap-3">
+                        <a href="{{ route('admin.login') }}"
+                            class="inline-flex items-center justify-center rounded-xl border border-green-500 bg-white px-5 py-2.5 text-sm font-semibold text-green-700 shadow-sm transition-all duration-300 hover:border-green-600 hover:bg-green-600 hover:text-white">
+                            Login
+                        </a>
+                        <a href="{{ route('ppdb.index') }}"
+                            class="inline-flex items-center justify-center rounded-xl bg-green-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-green-950/20 transition-all duration-300 hover:bg-green-400 {{ request()->routeIs('ppdb*') ? 'ring-2 ring-white/30 ring-offset-0' : '' }}">
+                            Daftar PPDB
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Mobile Toggle -->
-                <button id="mobile-menu-btn" class="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition">
+                <button id="mobile-menu-btn" aria-controls="mobile-menu" aria-expanded="false"
+                    aria-label="Toggle navigation"
+                    class="lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M4 6h16M4 12h16M4 18h16" />
@@ -86,16 +156,87 @@
             <!-- Mobile Menu -->
             <div id="mobile-menu" class="hidden lg:hidden pb-4 border-t border-white/20 pt-4">
                 <div class="flex flex-col gap-2">
-                    <a href="{{ route('home') }}" class="nav-link py-2">Beranda</a>
-                    <a href="{{ route('profil') }}" class="nav-link py-2">Profil</a>
-                    <a href="{{ route('akademik') }}" class="nav-link py-2">Akademik</a>
-                    <a href="{{ route('guru') }}" class="nav-link py-2">Guru & Staff</a>
-                    <a href="{{ route('berita.index') }}" class="nav-link py-2">Berita</a>
-                    <a href="{{ route('galeri.index') }}" class="nav-link py-2">Galeri</a>
-                    <a href="{{ route('prestasi.index') }}" class="nav-link py-2">Prestasi</a>
-                    <a href="{{ route('kontak.index') }}" class="nav-link py-2">Kontak</a>
-                    <a href="{{ route('ppdb.index') }}" class="btn-white !py-2 !px-5 text-sm self-start mt-2">📝 Daftar
-                        PPDB</a>
+                    <a href="{{ route('home') }}"
+                        class="rounded-xl px-4 py-3 text-sm transition-all duration-300 {{ request()->routeIs('home') ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                        Beranda
+                    </a>
+
+                    <details class="group overflow-hidden rounded-2xl bg-white/5 {{ $isProfilMenuActive ? 'ring-1 ring-white/20' : '' }}">
+                        <summary
+                            class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm transition-all duration-300 [&::-webkit-details-marker]:hidden {{ $isProfilMenuActive ? 'bg-white/10 text-white font-semibold' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                            <span>Profil</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="grid grid-rows-[0fr] transition-all duration-300 group-open:grid-rows-[1fr]">
+                            <div class="overflow-hidden">
+                                <div class="space-y-1 px-2 pb-2">
+                                    <a href="{{ route('profil') }}"
+                                        class="block rounded-xl px-4 py-2.5 text-sm transition {{ request()->routeIs('profil') ? 'bg-white/15 text-white font-semibold' : 'text-green-100 hover:bg-white/10 hover:text-white' }}">
+                                        Profil Madrasah
+                                    </a>
+                                    <a href="{{ route('guru') }}"
+                                        class="block rounded-xl px-4 py-2.5 text-sm transition {{ request()->routeIs('guru') ? 'bg-white/15 text-white font-semibold' : 'text-green-100 hover:bg-white/10 hover:text-white' }}">
+                                        Guru &amp; Staff
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <details
+                        class="group overflow-hidden rounded-2xl bg-white/5 {{ $isInformasiMenuActive ? 'ring-1 ring-white/20' : '' }}">
+                        <summary
+                            class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm transition-all duration-300 [&::-webkit-details-marker]:hidden {{ $isInformasiMenuActive ? 'bg-white/10 text-white font-semibold' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                            <span>Informasi</span>
+                            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </summary>
+                        <div class="grid grid-rows-[0fr] transition-all duration-300 group-open:grid-rows-[1fr]">
+                            <div class="overflow-hidden">
+                                <div class="space-y-1 px-2 pb-2">
+                                    <a href="{{ route('akademik') }}"
+                                        class="block rounded-xl px-4 py-2.5 text-sm transition {{ request()->routeIs('akademik') ? 'bg-white/15 text-white font-semibold' : 'text-green-100 hover:bg-white/10 hover:text-white' }}">
+                                        Akademik
+                                    </a>
+                                    <a href="{{ route('berita.index') }}"
+                                        class="block rounded-xl px-4 py-2.5 text-sm transition {{ request()->routeIs('berita*') ? 'bg-white/15 text-white font-semibold' : 'text-green-100 hover:bg-white/10 hover:text-white' }}">
+                                        Berita
+                                    </a>
+                                    <a href="{{ route('galeri.index') }}"
+                                        class="block rounded-xl px-4 py-2.5 text-sm transition {{ request()->routeIs('galeri*') ? 'bg-white/15 text-white font-semibold' : 'text-green-100 hover:bg-white/10 hover:text-white' }}">
+                                        Galeri
+                                    </a>
+                                    <a href="{{ route('prestasi.index') }}"
+                                        class="block rounded-xl px-4 py-2.5 text-sm transition {{ request()->routeIs('prestasi*') ? 'bg-white/15 text-white font-semibold' : 'text-green-100 hover:bg-white/10 hover:text-white' }}">
+                                        Prestasi
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+
+                    <a href="{{ route('kontak.index') }}"
+                        class="rounded-xl px-4 py-3 text-sm transition-all duration-300 {{ request()->routeIs('kontak*') ? 'bg-white/15 text-white font-semibold shadow-sm' : 'text-white/85 hover:bg-white/10 hover:text-white' }}">
+                        Kontak
+                    </a>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <a href="{{ route('admin.login') }}"
+                            class="inline-flex items-center justify-center rounded-xl border border-green-500 bg-white px-4 py-3 text-sm font-semibold text-green-700 shadow-sm transition-all duration-300 hover:border-green-600 hover:bg-green-600 hover:text-white">
+                            Login
+                        </a>
+                        <a href="{{ route('ppdb.index') }}"
+                            class="inline-flex items-center justify-center rounded-xl bg-green-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-green-950/20 transition-all duration-300 hover:bg-green-400 {{ request()->routeIs('ppdb*') ? 'ring-2 ring-white/30 ring-offset-0' : '' }}">
+                            Daftar PPDB
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,7 +281,7 @@
                         Madrasah Ibtidaiyah Miftahul Ulum berkomitmen memberikan pendidikan Islam berkualitas
                         yang memadukan ilmu pengetahuan dengan nilai-nilai keislaman sejak tahun 1978.
                     </p>
-                    <div class="flex gap-3">
+                    {{-- <div class="flex gap-3">
                         <a href="#"
                             class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition text-sm">📘</a>
                         <a href="#"
@@ -149,7 +290,7 @@
                             class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition text-sm">▶️</a>
                         <a href="https://wa.me/6281234567890" target="_blank"
                             class="w-9 h-9 bg-white/10 hover:bg-white/20 rounded-lg flex items-center justify-center transition text-sm">💬</a>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Links -->
@@ -181,16 +322,16 @@
                         </li>
                         <li class="flex items-center gap-2">
                             <span>📞</span>
-                            <a href="tel:+62353123456" class="hover:text-white transition">(0353) 123456</a>
+                            <a href="tel:+6285779248641" class="hover:text-white transition">085779248641</a>
                         </li>
                         <li class="flex items-center gap-2">
                             <span>✉️</span>
                             <a href="mailto:info@mimiftahululum.sch.id"
-                                class="hover:text-white transition">info@mimiftahululum.sch.id</a>
+                                class="hover:text-white transition">mimiftahululumjipo@gmail.com</a>
                         </li>
                         <li class="flex items-center gap-2">
                             <span>💬</span>
-                            <a href="https://wa.me/6281234567890" target="_blank"
+                            <a href="https://wa.me/+6285779248641" target="_blank"
                                 class="hover:text-white transition">WhatsApp Admin</a>
                         </li>
                     </ul>

@@ -1,4 +1,4 @@
-﻿?@extends('frontend.layouts.app')
+@extends('frontend.layouts.app')
 
 @section('title', 'Beranda')
 @section('meta_description', 'Selamat datang di website resmi MI Miftahul Ulum Jipo, Kepohbaru, Bojonegoro. Madrasah Ibtidaiyah terbaik dengan pendidikan Islam berkualitas.')

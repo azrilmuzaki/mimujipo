@@ -218,7 +218,7 @@ Kalau kamu mengubah data profil sekolah tetapi footer tidak ikut berubah, besar 
 
 ## Menu admin dan fungsi utamanya
 
-- `/admin/pengaturan`: profil sekolah, kontak, statistik, visi, misi, sambutan, sejarah, maps
+- `/admin/pengaturan`: profil sekolah, kontak, statistik, visi, misi, sambutan, sejarah, maps, logo, favicon
 - `/admin/slider`: slider homepage
 - `/admin/program`: program unggulan homepage
 - `/admin/berita`: berita

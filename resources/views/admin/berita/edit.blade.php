@@ -7,12 +7,13 @@
 <div class="max-w-4xl">
     <a href="{{ route('admin.berita.index') }}" class="text-sm text-gray-500 hover:text-green-700 mb-4 block">← Kembali</a>
     <div class="admin-card">
-        <form action="{{ route('admin.berita.update', $berita) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('admin.berita.update', ['berita' => $berita]) }}" method="POST" enctype="multipart/form-data" class="space-y-6 js-berita-form">
             @csrf @method('PUT')
 
             <div>
                 <label class="form-label">Judul Berita *</label>
                 <input type="text" name="judul" value="{{ old('judul', $berita->judul) }}" class="form-input" required>
+                @error('judul')<p class="form-error">{{ $message }}</p>@enderror
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -23,10 +24,12 @@
                         <option value="{{ $k->id }}" {{ (old('kategori_id', $berita->kategori_id) == $k->id) ? 'selected' : '' }}>{{ $k->nama }}</option>
                         @endforeach
                     </select>
+                    @error('kategori_id')<p class="form-error">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="form-label">Tanggal Publish</label>
                     <input type="datetime-local" name="published_at" value="{{ old('published_at', $berita->published_at?->format('Y-m-d\TH:i')) }}" class="form-input">
+                    @error('published_at')<p class="form-error">{{ $message }}</p>@enderror
                 </div>
             </div>
 
@@ -39,11 +42,14 @@
             <div>
                 <label class="form-label">Ganti Gambar (opsional)</label>
                 <input type="file" name="gambar" accept="image/*" class="form-input">
+                @error('gambar')<p class="form-error">{{ $message }}</p>@enderror
             </div>
 
             <div>
                 <label class="form-label">Konten *</label>
                 <textarea name="konten" id="editor" rows="12" class="form-input">{{ old('konten', $berita->konten) }}</textarea>
+                @error('konten')<p class="form-error">{{ $message }}</p>@enderror
+                <p class="text-xs text-gray-400 mt-1">Jika toolbar editor tidak muncul, konten tetap bisa diketik langsung di area ini.</p>
             </div>
 
             <div class="flex items-center gap-6">
@@ -66,10 +72,4 @@
 </div>
 @endsection
 
-@push('scripts')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-tinymce.init({ selector: '#editor', height: 400, menubar: false, branding: false,
-    plugins: 'link lists image', toolbar: 'undo redo | bold italic | link | numlist bullist | image' });
-</script>
-@endpush
+@include('admin.berita._editor_scripts')

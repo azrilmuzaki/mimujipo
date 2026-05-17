@@ -8,7 +8,7 @@
     <a href="{{ route('admin.berita.index') }}" class="text-sm text-gray-500 hover:text-green-700 mb-4 block">← Kembali ke Daftar Berita</a>
 
     <div class="admin-card">
-        <form action="{{ route('admin.berita.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+        <form action="{{ route('admin.berita.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6 js-berita-form">
             @csrf
 
             <div>
@@ -42,6 +42,8 @@
             <div>
                 <label class="form-label">Konten Berita *</label>
                 <textarea name="konten" id="editor" rows="12" class="form-input">{{ old('konten') }}</textarea>
+                @error('konten')<p class="form-error">{{ $message }}</p>@enderror
+                <p class="text-xs text-gray-400 mt-1">Jika toolbar editor tidak muncul, konten tetap bisa diketik langsung di area ini.</p>
             </div>
 
             <div class="flex items-center gap-6">
@@ -64,17 +66,4 @@
 </div>
 @endsection
 
-@push('scripts')
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-tinymce.init({
-    selector: '#editor',
-    plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline | link image media table | align lineheight | numlist bullist indent outdent | removeformat',
-    height: 400,
-    menubar: false,
-    branding: false,
-    language: 'id',
-});
-</script>
-@endpush
+@include('admin.berita._editor_scripts')

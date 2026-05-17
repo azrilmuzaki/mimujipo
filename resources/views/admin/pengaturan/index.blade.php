@@ -116,7 +116,9 @@
                 </div>
                 <div>
                     <label class="form-label">Favicon</label>
+                    @if($settings['favicon'] ?? '')<img src="{{ asset('storage/'.$settings['favicon']) }}" alt="" class="h-10 w-10 mb-2 rounded">@endif
                     <input type="file" name="favicon_file" accept="image/*" class="form-input">
+                    <p class="text-xs text-gray-500 mt-2">Jika favicon baru belum berubah di browser, lakukan refresh paksa dengan Ctrl+F5 atau buka tab baru karena favicon biasanya tersimpan di cache browser.</p>
                 </div>
             </div>
         </div>
